@@ -13,10 +13,12 @@ namespace clientApplication
         public static void Main()
         {
             client.Connect("127.0.0.1","hello! I'm a client!");
-            //New thread countdown
+            client.Connect("127.0.0.1", "hello! I'm a client 2!");
+            client.Connect("127.0.0.1", "hello! I'm a client 3!");
+
+	    //New thread countdown
             Thread KA = new Thread(client.KeepAlive);
             KA.Start();
-            
         }
 
         static void Connect(String server, String message)
