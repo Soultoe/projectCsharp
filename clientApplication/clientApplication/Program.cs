@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 
 namespace clientApplication
 {
@@ -14,6 +15,10 @@ namespace clientApplication
             client.Connect("127.0.0.1","hello!", "Client 1");
             client.Connect("127.0.0.1", "hello!", "Client 2");
             client.Connect("127.0.0.1", "hello!", "Client 3");
+
+    	    //New thread countdown
+                Thread KA = new Thread(client.KeepAlive);
+                KA.Start();
         }
 
         static void Connect(String server, String message, String username)
@@ -73,5 +78,7 @@ namespace clientApplication
             Console.WriteLine("\n Press Enter to continue...");
             Console.Read();
         }
+
+        static void KeepAlive() { Thread.Sleep(5000); Console.WriteLine("you're AFK"); }
     }
 }
