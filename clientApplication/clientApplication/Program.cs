@@ -105,7 +105,7 @@ namespace clientApplication
             {
                 // Translate data bytes to a ASCII string.
                 data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                Console.WriteLine("{0}", data);
+                //Console.WriteLine("{0}", data);
             }
         }
 
