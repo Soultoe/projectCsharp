@@ -38,7 +38,7 @@ namespace clientApplication
             do
             {
                 message = Console.ReadLine();
-                SendMsg(message);
+                SendMsg(username + ":" + " " + message);
             } while (!message.Equals("exit"));
             
             Disconnect();
@@ -109,7 +109,7 @@ namespace clientApplication
             {
                 // Translate data bytes to a ASCII string.
                 data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                //Console.WriteLine("{0}", data);
+                Console.WriteLine("{0}", data);
                 data = String.Empty;
             }
         }
