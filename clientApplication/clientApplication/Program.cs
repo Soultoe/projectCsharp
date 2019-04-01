@@ -23,7 +23,13 @@ namespace clientApplication
         public static void Main()
         {
             Connect("127.0.0.1","hello! I'm a client!",username);
-            SendMsg("HELLO THERE");
+            String message = null;
+            do
+            {
+                message = Console.ReadLine();
+                SendMsg(message);
+            } while (!message.Equals("exit"));
+            
             Disconnect();
             //Connect("127.0.0.1", "hello! I'm a client 2!");
             //Connect("127.0.0.1", "hello! I'm a client 3!");
