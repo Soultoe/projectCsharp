@@ -89,22 +89,24 @@ namespace clientApplication
 
         static void SendMsg(string message)
         {
-            stream = myClient.GetStream();
             Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
-
             stream.Write(data, 0, data.Length);
-
             data = new Byte[256];
-            
-            // String to store the response ASCII representation.
-            String responseData = String.Empty;
+        }
 
-            // Read the first batch of the TcpServer response bytes.
-            Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            //Console.WriteLine("Received: {0}", responseData);
-           // Console.WriteLine("{0}", responseData);
+        static void ReceiveMsg()
+        {
+            // Buffer for reading data
+            Byte[] bytes = new Byte[256];
+            String data = String.Empty;
+            int i;
 
+            while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+            {
+                // Translate data bytes to a ASCII string.
+                data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                Console.WriteLine("{0}", data);
+            }
         }
 
         static void Disconnect()
