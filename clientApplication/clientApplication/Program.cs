@@ -11,7 +11,7 @@ namespace clientApplication
 
         public static void Main()
         {
-            client.Connect("127.0.0.1","hello I'm a client");
+            client.Connect("127.0.0.1","hello! I'm a client!");
         }
 
         static void Connect(String server, String message)
