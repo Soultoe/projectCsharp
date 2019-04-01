@@ -105,17 +105,13 @@ namespace clientApplication
             String data = String.Empty;
             int i;
 
-            //while (true)
-            //{
-
-                while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
-                {
-                    // Translate data bytes to a ASCII string.
-                    data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                    Console.WriteLine("{0}", data);
-                    data = String.Empty;
-                }
-            //}
+            while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+            {
+                // Translate data bytes to a ASCII string.
+                data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                //Console.WriteLine("{0}", data);
+                data = String.Empty;
+            }
         }
 
         static void Disconnect()
