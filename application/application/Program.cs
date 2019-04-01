@@ -83,8 +83,6 @@ class MyTcpListener
             data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
             Console.WriteLine("{0}", data);
 
-            /*
-
             // Process the data sent by the client.
             //data = data.ToUpper();
             data = "CONNECTED TO SERVER";
@@ -95,7 +93,7 @@ class MyTcpListener
             stream.Write(msg, 0, msg.Length);
             Console.WriteLine("{0}", data);
 
-            */
+            
         }
 
         // Shutdown and end connection
