@@ -16,12 +16,13 @@ namespace clientApplication
 
         static NetworkStream stream;
 
+        static string username = "bob";
 
 
 
         public static void Main()
         {
-            Connect("127.0.0.1","hello! I'm a client!");
+            Connect("127.0.0.1","hello! I'm a client!",username);
             SendMsg("HELLO THERE");
             Disconnect();
             //Connect("127.0.0.1", "hello! I'm a client 2!");
@@ -32,7 +33,7 @@ namespace clientApplication
             //KA.Start();
         }
 
-        static void Connect(String server, String message)
+        static void Connect(String server, String message, String username)
         {
             try
             {
@@ -42,6 +43,8 @@ namespace clientApplication
 
                 // Send the message to the connected TcpServer. 
                 stream.Write(data, 0, data.Length);
+
+                Console.WriteLine("{0}: {1}", username, message);
 
                 // Receive the TcpServer.response.
 
@@ -54,6 +57,7 @@ namespace clientApplication
                 // Read the first batch of the TcpServer response bytes.
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+
                 //Console.WriteLine("Received: {0}", responseData);
                 Console.WriteLine("{0}", responseData);
             }
