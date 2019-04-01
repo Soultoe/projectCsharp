@@ -81,7 +81,7 @@ class MyTcpListener
 
             // Process the data sent by the client.
             //data = data.ToUpper();
-            data = "hello! I'm server!";
+            data = "CONNECTED TO SERVER";
 
             byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
 
