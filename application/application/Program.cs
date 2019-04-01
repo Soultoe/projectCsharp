@@ -65,6 +65,14 @@ class MyTcpListener
     private static void ThreadProc(object obj){
         var client = (TcpClient)obj;
 
+        while(client.Connected)
+            receiveData(client);
+
+        // Shutdown and end connection
+        client.Close();
+    }
+
+    private static void receiveData(TcpClient client){
         // Buffer for reading data
         Byte[] bytes = new Byte[256];
         String data = null;
@@ -95,8 +103,5 @@ class MyTcpListener
 
             
         }
-
-        // Shutdown and end connection
-        client.Close();
     }
 }
