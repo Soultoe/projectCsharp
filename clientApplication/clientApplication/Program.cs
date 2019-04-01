@@ -93,7 +93,7 @@ namespace clientApplication
             Int32 bytes = stream.Read(data, 0, data.Length);
             responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
             //Console.WriteLine("Received: {0}", responseData);
-            Console.WriteLine("{0}", responseData);
+           // Console.WriteLine("{0}", responseData);
 
         }
 

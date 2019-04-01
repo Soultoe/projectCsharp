@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -12,7 +13,9 @@ class MyTcpListener
      * GIT
      * https://github.com/Soultoe/projectCsharp
      */
-    
+
+    public static List<TcpClient> clients = new List<TcpClient>();
+
     public static void Main()
     {
         TcpListener server = null;
@@ -37,6 +40,8 @@ class MyTcpListener
                 // Perform a blocking call to accept requests.
                 // You could also user server.AcceptSocket() here.
                 TcpClient client = server.AcceptTcpClient();
+                clients.Add(client);
+
                 // Console.WriteLine("Connected!");
 
                 ThreadPool.QueueUserWorkItem(ThreadProc, client);
@@ -66,13 +71,33 @@ class MyTcpListener
         var client = (TcpClient)obj;
 
         while(client.Connected)
-            receiveData(client);
+        {
+            String msg = receiveData(client);
+
+            ThreadPool.QueueUserWorkItem(SendToAll, msg);
+        }
 
         // Shutdown and end connection
         client.Close();
     }
 
-    private static void receiveData(TcpClient client){
+    private static void SendToAll(object obj)
+    {
+        var data = (String)obj;
+
+        for (int i = 0; i < clients.Count; i++)
+        {
+            var client = clients[i];
+
+            NetworkStream stream = client.GetStream();
+
+            byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+            stream.Write(msg, 0, msg.Length);
+        }
+    }
+
+
+    private static String receiveData(TcpClient client){
         // Buffer for reading data
         Byte[] bytes = new Byte[256];
         String data = null;
@@ -89,8 +114,12 @@ class MyTcpListener
         {
             // Translate data bytes to a ASCII string.
             data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+
             Console.WriteLine("{0}", data);
 
+            return data;
+
+            /*
             // Process the data sent by the client.
             //data = data.ToUpper();
             data = "CONNECTED TO SERVER";
@@ -101,7 +130,11 @@ class MyTcpListener
             stream.Write(msg, 0, msg.Length);
             Console.WriteLine("{0}", data);
 
-            
+            */
+
+
         }
+
+        return null;
     }
 }
