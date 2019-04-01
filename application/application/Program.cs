@@ -32,15 +32,15 @@ class MyTcpListener
             // Enter the listening loop.
             while (true)
             {
-                Console.Write("Waiting for a connection... ");
+                // Console.Write("Waiting for a connection... ");
 
                 // Perform a blocking call to accept requests.
                 // You could also user server.AcceptSocket() here.
                 TcpClient client = server.AcceptTcpClient();
-                Console.WriteLine("Connected!");
+                // Console.WriteLine("Connected!");
 
                 ThreadPool.QueueUserWorkItem(ThreadProc, client);
-                
+
             }
         }
         catch (SocketException e)
@@ -57,6 +57,10 @@ class MyTcpListener
         Console.WriteLine("\nHit enter to continue...");
         Console.Read();
     }
+
+    // Accept incoming connections
+    //https://stackoverflow.com/questions/5339782/how-do-i-get-tcplistener-to-accept-multiple-connections-and-work-with-each-one-i
+
 
     private static void ThreadProc(object obj){
         var client = (TcpClient)obj;
@@ -77,7 +81,9 @@ class MyTcpListener
         {
             // Translate data bytes to a ASCII string.
             data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-            Console.WriteLine("Received: {0}", data);
+            Console.WriteLine("{0}", data);
+
+            /*
 
             // Process the data sent by the client.
             //data = data.ToUpper();
@@ -87,7 +93,9 @@ class MyTcpListener
 
             // Send back a response.
             stream.Write(msg, 0, msg.Length);
-            Console.WriteLine("Sent: {0}", data);
+            Console.WriteLine("{0}", data);
+
+            */
         }
 
         // Shutdown and end connection
