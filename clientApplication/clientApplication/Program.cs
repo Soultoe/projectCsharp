@@ -109,7 +109,8 @@ namespace clientApplication
             {
                 // Translate data bytes to a ASCII string.
                 data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                Console.WriteLine("{0}", data);
+                if(!data.Contains(username))
+                    Console.WriteLine("{0}", data);
                 data = String.Empty;
             }
         }
