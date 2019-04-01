@@ -12,7 +12,7 @@ namespace clientApplication
         static Int32 port = 13000;
         static String server = "127.0.0.1";
 
-        static TcpClient myClient = new TcpClient(server, port);
+        static TcpClient myClient;
 
         static NetworkStream stream;
 
@@ -22,8 +22,15 @@ namespace clientApplication
 
         public static void Main()
         {
-            Connect("127.0.0.1","hello! I'm a client!",username);
             String message = null;
+
+            Console.WriteLine("enter server IP: (you should put 127.0.0.1)");
+            server = Console.ReadLine();
+            Console.WriteLine("enter your name: (this one you can choose)");
+            username = Console.ReadLine();
+
+            Connect(server,"hello! I'm a client!",username);
+            
             do
             {
                 message = Console.ReadLine();
@@ -43,6 +50,9 @@ namespace clientApplication
         {
             try
             {
+                Console.WriteLine(server);
+                myClient = new TcpClient(server, port);
+
                 Byte[] data = System.Text.Encoding.ASCII.GetBytes(message);
 
                 stream = myClient.GetStream();
