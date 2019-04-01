@@ -29,7 +29,7 @@ namespace clientApplication
             Console.WriteLine("enter your name: (this one you can choose)");
             username = Console.ReadLine();
 
-            Connect(server,"hello! I'm a client!",username);
+            Connect(server,username + " is now connected",username);
 
             //new thread to listen to incoming messages --> ReceiveMsg
             Thread receive = new Thread(ReceiveMsg);
@@ -117,6 +117,7 @@ namespace clientApplication
         static void Disconnect()
         {
             // Close everything.
+            SendMsg(username + " is now disconnected");
             stream.Close();
             myClient.Close();
             Console.WriteLine("Disconnected From server!");
