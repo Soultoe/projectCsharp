@@ -35,19 +35,24 @@ namespace clientApplication
             Thread receive = new Thread(ReceiveMsg);
             receive.Start();
 
+            //New thread countdown
+            Thread KA = new Thread(client.KeepAlive);
+            KA.Start();
+
             do
             {
                 message = Console.ReadLine();
-                SendMsg(username + ":" + " " + message);
+                if (!message.Equals("exit"))
+                {
+                    SendMsg(username + ":" + " " + message);
+                    //restart afk thread
+                    KA.Abort();
+                    KA = new Thread(client.KeepAlive);
+                    KA.Start();
+                }
             } while (!message.Equals("exit"));
-            
-            Disconnect();
-            //Connect("127.0.0.1", "hello! I'm a client 2!");
-            //Connect("127.0.0.1", "hello! I'm a client 3!");
 
-	        //New thread countdown
-            //Thread KA = new Thread(client.KeepAlive);
-            //KA.Start();
+            Disconnect();
         }
 
         static void Connect(String server, String message, String username)
@@ -125,9 +130,11 @@ namespace clientApplication
         }
 
         static void KeepAlive() {
-            Thread.Sleep(5000);
+            Thread.Sleep(60000);
             Console.WriteLine("you're AFK, bye!");
             Disconnect();
+            server = Console.ReadLine();
+
         }
     }
 }
